@@ -8,24 +8,33 @@ from datetime import date
 ATTENDANCE_FILE = "attendance.json"
 
 def load_attendance():
-    if os.path.exists(ATTENDANCE_FILE):
-        with open(ATTENDANCE_FILE, "r") as f:
-            return json.load(f)
-    else:
+    try:
+        if os.path.exists(ATTENDANCE_FILE):
+            with open(ATTENDANCE_FILE, "r") as f:
+                return json.load(f)
+        else:
+            # File doesn't exist yet, return empty dict
+            return {}
+    except:
         return {}
 
 def save_attendance(data):
-    with open(ATTENDANCE_FILE, "w") as f:
-        json.dump(data, f, indent=4)
+    try:
+        with open(ATTENDANCE_FILE, "w") as f:
+            json.dump(data, f, indent=4)
+    except Exception as e:
+        st.error(f"File write error: {e}")
 
 def run_attendance_app():
-    st.title("📋 Attendance App (Only Present Students)")
+    st.title("📋 Attendance App (Present Only)")
 
     today = str(date.today())
     attendance = load_attendance()
 
+    # Ensure today's entry exists
     if today not in attendance:
         attendance[today] = {"present": []}
+        save_attendance(attendance)  # 👈 Save empty structure so file is created
 
     student_name = st.text_input("👤 Student ka Naam")
 
