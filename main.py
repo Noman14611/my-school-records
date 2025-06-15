@@ -1,24 +1,23 @@
+# main.py
+
 import streamlit as st
-
-# Import your apps
 from attendance import run_attendance_app
-from feeapp import run_fee_app
-from salaryapp import run_salary_app
 
-# Sidebar title
+# You can add more imports here later like:
+# from feeapp import run_fee_app
+# from salaryapp import run_salary_app
+
 st.sidebar.title("📚 School Management System")
 
-# Sidebar menu
-app_option = st.sidebar.selectbox("Select App", [
+app = st.sidebar.selectbox("Select App", [
     "Attendance",
-    "Fee Submission",
-    "Teacher Salary"
+    # "Fee Submission",
+    # "Teacher Salary"
 ])
 
-# Run selected app
-if app_option == "Attendance":
+if app == "Attendance":
     run_attendance_app()
-elif app_option == "Fee Submission":
-    run_fee_app()
-elif app_option == "Teacher Salary":
-    run_salary_app()
+# elif app == "Fee Submission":
+#     run_fee_app()
+# elif app == "Teacher Salary":
+#     run_salary_app()
