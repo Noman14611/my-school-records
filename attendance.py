@@ -2,25 +2,6 @@ import streamlit as st
 import json
 import datetime
 import os
-def run_attendance_app():
-    print("✅ Attendance App Running")
-
-ATTENDANCE_FILE = "attendance.json"
-
-# Load data from file
-def load_attendance():
-    if os.path.exists(ATTENDANCE_FILE):
-        with open(ATTENDANCE_FILE, "r") as f:
-            try:
-                return json.load(f)
-            except json.JSONDecodeError:
-                return {}  # corrupted file
-    return {}
-
-# Save data to file
-def save_attendance(data):
-    with open(ATTENDANCE_FILE, "w") as f:
-        json.dump(data, f, indent=2)
 
 # Main function to run app
 def run_attendance_app():
