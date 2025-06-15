@@ -31,7 +31,7 @@ def run_salary_app():
         if name and amount > 0:
             salaries.append({"name": name, "amount": amount, "month": month})
             save_salaries(salaries)
-            st.success("Salary saved successfully.")
+            st.success("✅ Salary saved successfully.")
 
     st.subheader("📜 Salary Records")
     for record in salaries:
