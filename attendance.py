@@ -15,7 +15,7 @@ def save_attendance(data):
     with open(ATTENDANCE_FILE, "w") as f:
         json.dump(data, f, indent=2)
 
-def run_attendance_app():
+def run_attendance_app():  # <-- Ye function hona zaroori hai!
     st.title("📅 Student Attendance")
 
     today = str(datetime.date.today())
@@ -41,4 +41,15 @@ def run_attendance_app():
 
     if present_students:
         cols = st.columns(3)
-        for idx, student in enumerate(present
+        for idx, student in enumerate(present_students):
+            with cols[idx % 3]:
+                st.markdown(
+                    f"""
+                    <div style="padding: 10px; border-radius: 10px; background-color: #f0f2f6; box-shadow: 0 0 8px rgba(0,0,0,0.05); text-align:center;">
+                        <h5 style="color:#4a4a4a;">👤 {student}</h5>
+                    </div>
+                    """,
+                    unsafe_allow_html=True
+                )
+    else:
+        st.info("No students marked present yet.")
