@@ -4,6 +4,10 @@ import streamlit as st
 import json
 import os
 from datetime import date
+def run_attendance_app():
+    import streamlit as st
+    st.title("📋 Attendance App")
+    st.write("Attendance module loaded.")
 
 # Attendance data file
 ATTENDANCE_FILE = "attendance.json"
