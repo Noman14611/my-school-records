@@ -1,8 +1,10 @@
+# salaryapp.py
+
 import streamlit as st
 import json
 import os
 
-SALARY_FILE = "teachers_salary.json"
+SALARY_FILE = "teacher_salaries.json"
 
 def load_salaries():
     if os.path.exists(SALARY_FILE):
@@ -12,25 +14,25 @@ def load_salaries():
 
 def save_salaries(data):
     with open(SALARY_FILE, "w") as f:
-        json.dump(data, f, indent=2)
+        json.dump(data, f, indent=4)
 
 def run_salary_app():
-    st.title("👨‍🏫 Teacher Salary Management")
+    st.title("👨‍🏫 Teacher Salary Manager")
 
-    data = load_salaries()
+    salaries = load_salaries()
+    name = st.text_input("👨‍🏫 Teacher Name")
+    amount = st.number_input("💰 Salary Amount", min_value=0)
+    month = st.selectbox("📆 Month", [
+        "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+    ])
 
-    st.subheader("Add Teacher Salary")
-    with st.form("salary_form"):
-        name = st.text_input("Teacher Name")
-        month = st.selectbox("Month", ["January", "February", "March", "April", "May", "June", "July",
-                                       "August", "September", "October", "November", "December"])
-        salary = st.number_input("Salary Amount", min_value=0)
-        submit = st.form_submit_button("Add Salary")
-        if submit:
-            data.append({"name": name, "month": month, "salary": salary})
-            save_salaries(data)
-            st.success("Salary added!")
+    if st.button("💾 Submit Salary"):
+        if name and amount > 0:
+            salaries.append({"name": name, "amount": amount, "month": month})
+            save_salaries(salaries)
+            st.success("Salary saved successfully.")
 
-    st.subheader("All Salaries")
-    for item in data:
-        st.write(f"{item['name']} - {item['month']} : Rs. {item['salary']}")
+    st.subheader("📜 Salary Records")
+    for record in salaries:
+        st.write(f"{record['name']} - {record['amount']} PKR ({record['month']})")
