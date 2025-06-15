@@ -21,12 +21,14 @@ def run_attendance_app():
     today = str(datetime.date.today())
     attendance = load_attendance()
 
+    # initialize today's attendance if not present
     if today not in attendance:
         attendance[today] = {"present": [], "absent": []}
 
     present_students = attendance[today]["present"]
     absent_students = attendance[today]["absent"]
 
+    # Attendance form
     with st.form("attendance_form"):
         name = st.text_input("👤 Student Name")
         status = st.radio("Mark as", ["Present", "Absent"])
@@ -34,7 +36,7 @@ def run_attendance_app():
 
         if submit:
             if not name:
-                st.error("Please enter a student name.")
+                st.error("Please enter a name.")
             elif name in present_students or name in absent_students:
                 st.warning(f"{name} already marked.")
             else:
@@ -42,9 +44,15 @@ def run_attendance_app():
                     present_students.append(name)
                 else:
                     absent_students.append(name)
+                attendance[today] = {"present": present_students, "absent": absent_students}
                 save_attendance(attendance)
-                st.success(f"{name} marked as {status}!")
+                st.success(f"{name} marked as {status}")
 
-    # 📋 Show Today's Attendance
-    st.markdown(f"### ✅ Present Today ({len(present_students)})")
-    if p
+    # Show results
+    st.markdown(f"### ✅ Present Students ({len(present_students)})")
+    for student in present_students:
+        st.write("👤", student)
+
+    st.markdown(f"### ❌ Absent Students ({len(absent_students)})")
+    for student in absent_students:
+        st.write("👤", student)
