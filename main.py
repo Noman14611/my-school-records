@@ -1,9 +1,8 @@
 import streamlit as st
 from attendance import run_attendance_app
 
-st.set_page_config(page_title="School App")
-st.sidebar.title("App Selector")
-choice = st.sidebar.selectbox("Choose", ["Attendance"])
+st.sidebar.title("📘 School App")
+page = st.sidebar.selectbox("Select App", ["Attendance"])
 
-if choice == "Attendance":
+if page == "Attendance":
     run_attendance_app()
