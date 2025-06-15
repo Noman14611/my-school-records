@@ -2,6 +2,8 @@ import streamlit as st
 import json
 import datetime
 import os
+def run_attendance_app():
+    print("✅ Attendance App Running")
 
 ATTENDANCE_FILE = "attendance.json"
 
