@@ -9,7 +9,9 @@ st.set_page_config(page_title="School Management System", layout="centered")
 st.sidebar.title("🏫 School Management System")
 app = st.sidebar.selectbox("📂 Select Module", ["Attendance", "Teacher Salary"])
 
+# 👇 Yahan modules switch hote hain
 if app == "Attendance":
     run_attendance_app()
+
 elif app == "Teacher Salary":
-    run_salary_app()
+    run_salary_app()  # ✅ Ye line yahan honi chahiye
