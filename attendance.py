@@ -20,15 +20,25 @@ def run_attendance_app():
 
     today = str(datetime.date.today())
     attendance = load_attendance()
-    students = attendance.get(today, [])
+    present_students = attendance.get(today, [])
 
-    name = st.text_input("Student Name")
-    if st.button("Mark Present"):
-        if name and name not in students:
-            students.append(name)
-            attendance[today] = students
-            save_attendance(attendance)
-            st.success(f"{name} marked present!")
+    with st.form("attendance_form"):
+        name = st.text_input("👤 Student Name")
+        submit = st.form_submit_button("✅ Mark Present")
+        if submit:
+            if name:
+                if name not in present_students:
+                    present_students.append(name)
+                    attendance[today] = present_students
+                    save_attendance(attendance)
+                    st.success(f"{name} marked present!")
+                else:
+                    st.warning(f"{name} is already marked present.")
+            else:
+                st.error("Please enter a student name.")
 
-    st.subheader(f"Present Today ({today})")
-    st.write(students)
+    st.markdown(f"### 🎯 Present Today - *{today}*")
+
+    if present_students:
+        cols = st.columns(3)
+        for idx, student in enumerate(present
